@@ -1,0 +1,98 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#101018">
+<title>Sama AI Studio</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#101018;color:white;font-family:Arial,sans-serif}
+header{padding:22px;background:#1b1b27}
+.logo{font-size:25px;font-weight:bold;color:#e5bd65}
+main{max-width:600px;margin:auto;padding:20px}
+.card{background:#1b1b27;border:1px solid #444;border-radius:16px;padding:18px;margin:18px 0}
+label{display:block;margin:16px 0 8px}
+input,select,textarea{width:100%;padding:13px;background:#101018;color:white;border:1px solid #555;border-radius:9px}
+button{width:100%;padding:15px;margin-top:15px;background:#d5ad58;color:#111;border:0;border-radius:10px;font-weight:bold}
+#preview{width:100%;margin-top:12px;border-radius:10px}
+.small{color:#aaa;font-size:13px}
+</style>
+</head>
+<body>
+<header>
+<div class="logo">SAMA AI STUDIO</div>
+<p class="small">Your AI Video Creator</p>
+</header>
+<main>
+<h2>Create Your AI Video</h2>
+<p class="small">Create product advertising video concepts.</p>
+<div class="card">
+<label>Upload Product Image</label>
+<input type="file" id="photo" accept="image/*">
+<img id="preview" hidden>
+<label>Choose AI Presenter</label>
+<select id="presenter">
+<option>Female Presenter</option>
+<option>Male Presenter</option>
+<option>Product Only</option>
+</select>
+<label>Choose Language</label>
+<select id="language">
+<option>Arabic - Saudi</option>
+<option>Arabic - Gulf</option>
+<option>English</option>
+<option>Urdu</option>
+</select>
+<label>Video Duration</label>
+<select id="duration">
+<option>10 Seconds</option>
+<option>15 Seconds</option>
+<option>30 Seconds</option>
+</select>
+<label>Advertisement Script</label>
+<textarea id="script" placeholder="Describe your product..."></textarea>
+<button onclick="createConcept()">Create Video Concept</button>
+<p id="status" class="small"></p>
+</div>
+<div class="card">
+<h3>My Projects</h3>
+<div id="projects" class="small">No projects yet.</div>
+</div>
+<div class="card">
+<h3>Plans</h3>
+<p>Free Plan - Limited usage</p>
+<p>Pro Plan - More credits</p>
+<p>Business Plan - For creators</p>
+<p class="small">Subscriptions are not enabled yet.</p>
+</div>
+</main>
+<script>
+const photo=document.getElementById('photo');
+photo.onchange=()=>{
+const f=photo.files[0];
+if(!f)return;
+const img=document.getElementById('preview');
+img.src=URL.createObjectURL(f);
+img.hidden=false;
+};
+function createConcept(){
+const f=photo.files[0];
+const status=document.getElementById('status');
+if(!f){status.textContent='Please upload an image first.';return;}
+const details={
+image:f.name,
+presenter:document.getElementById('presenter').value,
+language:document.getElementById('language').value,
+duration:document.getElementById('duration').value,
+script:document.getElementById('script').value
+};
+const project=document.createElement('p');
+project.textContent=details.image+' | '+details.presenter+' | '+details.language+' | '+details.duration;
+document.getElementById('projects').prepend(project);
+status.textContent='Your video project concept has been created. Actual AI video generation is not connected yet.';
+}
+</script>
+</body>
+</html>
